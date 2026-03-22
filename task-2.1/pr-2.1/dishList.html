@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/dishList.css">
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/table.js"></script>
+    <script src="js/filter.js"></script>
+    <script src="js/sort.js"></script>
+    <title>DishListPage</title>
+</head>
+
+<body>
+    <header>
+        <ul>
+            <li><a href="index.html">Рецепты</a></li>
+            <li><a href="#">Список рецептов блюд</a></li>
+        </ul>
+        <hr>
+    </header>
+
+    <main>
+
+        <details>
+            <summary>График</summary>
+            <form>
+                <p><b>Значение по оси ОХ</b></p>
+                <input type="radio" id="eatTime" name="axisX" value="eatTime">
+                <label for="eatTime">Прием пищи</label><br>
+
+                <input type="radio" id="amountDishes" name="axisX" value="amountDishes">
+                <label for="amountDishes">Количество порций</label><br>
+
+                <input type="radio" id="timeCooking" name="axisX" value="timeCooking">
+                <label for="timeCooking">Примерная длительность готовки</label>
+
+                <p><b>Результат</b></p>
+                <input type="checkbox" id="recipesCount" name="recipesCount">
+                <label for="recipesCount">Количество рецептов</label><br>
+
+                <input type="checkbox" id="avgIngredients" name="avgIngredients">
+                <label for="avgIngredients">Среднее количество ингредиентов</label><br>
+
+                <input type="checkbox" id="popularity" name="popularity">
+                <label for="popularity">Средняя популярность</label><br>
+
+                <input type="button" value="Построить">
+            </form>
+            <p>Здесь будет график</p>
+        </details>
+
+        <div>
+            <p>Фильтр</p>
+            <form id="filter">
+                <label for="name">Название:</label>
+                <input type="text" id="name" name="name"><br>
+
+                <label for="eatTime">Прием пищи</label>
+                <input type="text" id="eatTime" name="eatTime"><br>
+
+                <label for="amountDishes">Количество порций</label>
+                <input type="number" id="amountDishes" name="amountDishes" min="1"><br>
+
+                <label for="timeCooking">Длительность готовки</label>
+                <input type="number" id="timeCooking" name="timeCooking" min="5"><br>
+
+                <label for="caloriesFrom">Количество кКал</label>
+                от <input type="number" id="caloriesFrom" name="caloriesFrom">
+                до <input type="number" id="caloriesTo" name="caloriesTo"><br>
+
+                <input type="button" value="Найти">
+                <input type="button" value="Очистить фильтры">
+            </form>
+        </div>
+
+        <div>
+            <p>Сортировать по:</p>
+            <form id="sort">
+                <label for="firstSort">Первый уровень: </label>
+                <select id="firstSort" name="option"></select>
+                <label for="firstSortDesc">по убыванию?</label>
+                <input type="checkbox" id="firstSortDesc" name="first"> <br>
+
+                <label for="secondSort">Второй уровень: </label>
+                <select id="secondSort" name="option"></select>
+                <label for="secondSortDesc">по убыванию?</label>
+                <input type="checkbox" id="secondSortDesc" name="second"> <br>
+
+                <label for="thirdSort">Третий уровень: </label>
+                <select id="thirdSort" name="option"></select>
+                <label for="thirdSortDesc">по убыванию?</label>
+                <input type="checkbox" id="thirdSortDesc" name="third"> <br>
+
+                <input type="button" value="Сортировать">
+                <input type="button" value="Сбросить сортировку">
+            </form>
+        </div>
+        <br>
+        <table id="recipesTable">
+        </table>
+    </main>
+
+    <footer>
+        <hr>
+        <p>Сайт создан студентом ДВФУ, группа Б9123-09.03.04, Полулях Андрей</p>
+    </footer>
+</body>
+
+</html>

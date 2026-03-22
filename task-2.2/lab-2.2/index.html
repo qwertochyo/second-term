@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/image.js"></script>
+  <script src="js/path.js"></script>
+  <title>Practice 2.2</title>
+</head>
+
+<body>
+  <form id="setting">
+    <p id="coordinateContainer">Координаты рисунка<br>
+      <label for="cxFrom">x: </label>
+      <input type="number" id="cxFrom" value="300" max=600 min=0> <span>до
+        <input type="number" id="cxTo" value="500" max=600 min=0></span><br>
+      <label for="cyFrom">y: </label>
+      <input type="number" id="cyFrom" value="300" max=600 min=0> <span>до
+        <input type="number" id="cyTo" value="500" max=600 min=0></span>
+    </p>
+    <p id="moveContainer">Пути пермещения<br>
+      <select id="moveType" name="move">
+        <option value="symbol">Буквой "Г"</option>
+        <option value="circle">По кругу</option>
+      </select>
+    </p>
+    <p id="scaleContainer">Масштаб<br>
+      <label for="scaleXFrom">по x:</label>
+      <input type="number" id="scaleXFrom" value="2"> <span>до
+        <input type="number" id="scaleXTo" value="3"></span><br>
+      <label for="scaleYFrom">по y:</label>
+      <input type="number" id="scaleYFrom" value="2"> <span>до
+        <input type="number" id="scaleYTo" value="3"></span>
+    </p>
+    <p id="rotateContainer">Поворот<br>
+      <label for="rotateFrom">угол:</label>
+      <input type="number" id="rotateFrom" value="0"> <span>до
+        <input type="number" id="rotateTo" value="180"></span><br>
+    </p>
+    <input type="button" value="Нарисовать">
+    <input type="button" value="Очистить"><br>
+
+    <label for="isAnimate">
+      <input type="checkbox" id="isAnimate">Включить анимацию?
+    </label>
+    <select id="animationType" name="animation">
+      <option value="linear">linear</option>
+      <option value="elastic">elastic</option>
+      <option value="bounce">bounce</option>
+    </select><br>
+    <span><label for="isMove">
+        <input type="checkbox" id="isMove">Перемещение вдоль пути?
+      </label>
+    </span><br>
+    <input type="button" value="Анимировать">
+  </form>
+  <svg></svg>
+</body>
+
+</html>
