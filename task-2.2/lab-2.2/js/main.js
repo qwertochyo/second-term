@@ -1,113 +1,108 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const width = 600;
   const height = 600;
+
   const svg = d3.select("svg")
     .attr("width", width)
     .attr("height", height);
 
   const dataForm = document.getElementById("setting");
 
-  const drawButton = document.querySelector("input[value='Нарисовать']");
-  const resetButton = document.querySelector("input[value='Очистить']");
-  const animateButton = document.querySelector("input[value='Анимировать']");
+  const drawButton = d3.select("input[value='Нарисовать']");
+  const resetButton = d3.select("input[value='Очистить']");
+  const animateButton = d3.select("input[value='Анимировать']");
 
-  const coordinateContainer = document.getElementById("coordinateContainer");
-  const moveContainer = document.getElementById("moveContainer");
-  const scaleContainer = document.getElementById("scaleContainer");
-  const rotateContainer = document.getElementById("rotateContainer");
+  const coordinateContainer = d3.select("#coordinateContainer");
+  const moveContainer = d3.select("#moveContainer");
+  const scaleContainer = d3.select("#scaleContainer");
+  const rotateContainer = d3.select("#rotateContainer");
 
-  const checkboxAnimate = document.getElementById("isAnimate");
-  const checkboxMove = document.getElementById("isMove");
+  const checkboxAnimate = d3.select("#isAnimate");
+  const checkboxMove = d3.select("#isMove");
 
-  const selectAnimate = document.getElementById("animationType");
+  const selectAnimate = d3.select("#animationType");
+  const spans = d3.selectAll("span");
 
-  const spans = document.querySelectorAll("span");
+  const startUI = () => {
+    const isAnimate = checkboxAnimate.property("checked");
+    const isMove = checkboxMove.property("checked");
 
-  if (!checkboxAnimate.checked) {
-    drawButton.hidden = checkboxAnimate.checked;
-    selectAnimate.hidden = !checkboxAnimate.checked;
-    animateButton.hidden = !checkboxAnimate.checked;
+    drawButton.property("hidden", isAnimate);
+    selectAnimate.property("hidden", !isAnimate);
+    animateButton.property("hidden", !isAnimate);
 
-    for (let span of spans) {
-      span.hidden = !checkboxAnimate.checked;
-    }
-  }
+    spans.property("hidden", !isAnimate);
 
-  if (!checkboxMove.checked) {
-    moveContainer.hidden = !checkboxMove.checked;
-  }
+    coordinateContainer.property("hidden", isMove);
+    moveContainer.property("hidden", !isMove);
+    scaleContainer.property("hidden", isMove);
+    rotateContainer.property("hidden", isMove);
+  };
 
-  checkboxAnimate.addEventListener("change", () => {
-    drawButton.hidden = checkboxAnimate.checked;
-    selectAnimate.hidden = !checkboxAnimate.checked;
-    animateButton.hidden = !checkboxAnimate.checked;
+  startUI();
 
-    for (let span of spans) {
-      span.hidden = !checkboxAnimate.checked;
-    }
-  });
+  checkboxAnimate.on("change", startUI);
+  checkboxMove.on("change", startUI);
 
-  checkboxMove.addEventListener("change", () => {
-    coordinateContainer.hidden = checkboxMove.checked;
-    moveContainer.hidden = !checkboxMove.checked;
-    scaleContainer.hidden = checkboxMove.checked;
-    rotateContainer.hidden = checkboxMove.checked;
-  });
+  drawButton.on("click", () => draw(dataForm));
+  resetButton.on("click", () => resetSVG(svg));
+  animateButton.on("click", () =>
+    runAnimation(dataForm, selectAnimate.property("value"), checkboxMove.property("checked"))
+  );
+});
 
-  drawButton.addEventListener("click", () => draw(dataForm));
-  resetButton.addEventListener("click", () => resetSVG(svg));
-  animateButton.addEventListener("click", () => runAnimation(dataForm, selectAnimate.value, checkboxMove.checked));
-})
-
-const draw = (dataForm) => {
+const draw = (form) => {
   const svg = d3.select("svg");
+
   const pict = drawSmile(svg);
 
-  pict.attr("transform", `translate(${dataForm.cxFrom.value}, 
-    ${dataForm.cyFrom.value}) scale(${dataForm.scaleXFrom.value}, ${dataForm.scaleYFrom.value}) 
-    rotate(${dataForm.rotateFrom.value})`);
-}
+  pict.attr("transform", `
+    translate(${form.cxFrom.value}, ${form.cyFrom.value})
+    scale(${form.scaleXFrom.value}, ${form.scaleYFrom.value})
+    rotate(${form.rotateFrom.value})
+  `);
+};
 
 const resetSVG = (svg) => {
-  svg.selectAll('*').remove();
-}
+  svg.selectAll("*").remove();
+};
 
-const runAnimation = (dataForm, animationType, isChecked) => {
+const runAnimation = (form, animationType, isMove) => {
   const svg = d3.select("svg");
   const pict = drawSmile(svg);
 
-  if (!isChecked) {
-    let func;
+  const easingMap = {
+    linear: d3.easeLinear,
+    elastic: d3.easeElastic,
+    bounce: d3.easeBounce
+  };
 
-    switch (animationType) {
-      case "linear":
-        func = d3.easeLinear;
-        break;
-      case "elastic":
-        func = d3.easeElastic;
-        break;
-      case "bounce":
-        func = d3.easeBounce;
-        break;
-      default:
-        func = d3.easeLinear;
-    }
+  const easeFunc = easingMap[animationType] || d3.easeLinear;
 
-    pict.attr("transform",
-      `translate(${dataForm.cxFrom.value}, ${dataForm.cyFrom.value}) scale(${dataForm.scaleXFrom.value}, ${dataForm.scaleYFrom.value}) 
-    rotate(${dataForm.rotateFrom.value})`)
-      .transition(svg)
+  if (!isMove) {
+    pict
+      .attr("transform", `
+        translate(${form.cxFrom.value}, ${form.cyFrom.value})
+        scale(${form.scaleXFrom.value}, ${form.scaleYFrom.value})
+        rotate(${form.rotateFrom.value})
+      `)
+      .transition()
       .duration(6000)
-      .ease(func)
-      .attr("transform",
-        `translate(${dataForm.cxTo.value}, ${dataForm.cyTo.value}) scale(${dataForm.scaleXTo.value}, ${dataForm.scaleYTo.value}) 
-      rotate(${dataForm.rotateTo.value})`);
+      .ease(easeFunc)
+      .attr("transform", `
+        translate(${form.cxTo.value}, ${form.cyTo.value})
+        scale(${form.scaleXTo.value}, ${form.scaleYTo.value})
+        rotate(${form.rotateTo.value})
+      `);
+
   } else {
-    const moveType = document.getElementById("moveType").value;
-    let path = drawPath(moveType);
-    pict.transition()
-      .ease(d3.easeLinear)
+    const moveType = d3.select("#moveType").property("value");
+    const path = drawPath(moveType);
+
+    pict
+      .transition()
       .duration(6000)
-      .attrTween('transform', translateAlong(path.node()));
+      .ease(easeFunc)
+      .attrTween("transform", translateAlong(path.node()));
   }
-}
+};

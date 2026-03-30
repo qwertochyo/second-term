@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/image.js"></script>
+  <script src="js/path.js"></script>
+  <title>Practice 2.2</title>
+</head>
+<body>
+  <form id="setting">
+    <p>Масштаб<br>
+      <label for="scaleXFrom">по x:</label>
+      <input type="number" id="scaleXFrom" value="1"> до
+      <input type="number" id="scaleXTo" value="3"><br>
+      <label for="scaleYFrom">по y:</label>
+      <input type="number" id="scaleYFrom" value="1"> до
+      <input type="number" id="scaleYTo" value="3">
+    </p>
+    <p>Поворот<br>
+      <label for="rotateFrom">угол:</label>
+      <input type="number" id="rotateFrom" value="0"> до
+        <input type="number" id="rotateTo" value="180"><br>
+    </p>
+    <p>
+      <label for="duration">Время анимации</label>
+      <input type="number" id="duration" value="10000">
+    </p>
+    <input type="button" value="Анимировать">
+    <input type="button" value="Очистить">
+  </form>
+  <svg></svg>
+</body>
+</html>

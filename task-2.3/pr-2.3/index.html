@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="http://d3js.org/d3.v7.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/table.js"></script>
+  <script src="js/chart.js"></script>
+  <title>Practice 2.3</title>
+</head>
+<body>
+  <form id="chart">
+    <p>Значение по оси ОХ</p>
+    <input type="radio" name="axisX" value="popularity">Популярность<br>
+    <input type="radio" name="axisX" value="time">Длительность готовки
+
+    <p>Значение по оси ОY</p>
+    <div>Выберите оси Y</div>
+    <input type="checkbox" name="axisY" value="max">Максимальная высота<br>
+    <input type="checkbox" name="axisY" value="min">Минимальная высота
+
+    <p>Тип графика
+      <select name="chartType" id="chartType">
+        <option value="scatter">Точечная диаграмма</option>
+        <option value="histogram">Гистограмма</option>
+        <option value="linear">Линейная диаграмма</option>
+      </select>
+    </p>
+
+    <input type="button" value="Построить">
+  </form>
+  <svg></svg><br>
+  <input type="button" value="Скрыть таблицу">
+  <table id="recipesTable"></table>
+</body>
+</html>
