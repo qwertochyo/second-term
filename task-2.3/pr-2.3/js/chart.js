@@ -91,7 +91,7 @@ const drawGraph = (data, selectX, selectY, chartType) => {
 const createChart = (svg, data, scaleX, scaleY, attr_area, type, color, valueType) => {
   const isMin = valueType === "min";
 
-  const offsetX = isMin ? -2 : 2;
+  const offsetX = isMin ? -3 : 3;
   const valueIndex = isMin ? 0 : 1;
 
   if (type === "scatter") {
@@ -123,7 +123,7 @@ const createChart = (svg, data, scaleX, scaleY, attr_area, type, color, valueTyp
       .attr("x", d =>
         scaleX(d.labelX) + scaleX.bandwidth() / 2 + offsetX
       )
-      .attr("width", 4)
+      .attr("width", 6)
       .attr("y", d => scaleY(d.values[valueIndex]))
       .attr("height", d =>
         scaleY.range()[0] - scaleY(d.values[valueIndex])
@@ -133,7 +133,7 @@ const createChart = (svg, data, scaleX, scaleY, attr_area, type, color, valueTyp
   } else if (type === "linear") {
     const line = d3.line()
       .x(d => scaleX(d.labelX) + scaleX.bandwidth() / 2)
-      .y(d => scaleY(d.values[valueIndex]) - valueIndex * 3)
+      .y(d => scaleY(d.values[valueIndex]) - valueIndex * 7)
       .curve(d3.curveMonotoneX)
 
     svg.append("path")

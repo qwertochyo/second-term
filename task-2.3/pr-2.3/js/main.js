@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const createChartButton = d3.select("input[value='Построить']");
   const toggleTableButton = d3.select("input[value='Скрыть таблицу']");
+  const selectMax = d3.select("#max");
+  const selectMin = d3.select("#min");
   const error = d3.select("div");
 
   error.property("hidden", true);
@@ -10,17 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   createChartButton.on("click", () => {
     const selectedX = d3.select("input[name='axisX']:checked").property("value");
-    const selectedY = d3.selectAll("input[name='axisY']:checked").nodes().map((s) => s.value);
     const selectedType = d3.select("#chartType").property("value");
+    const isMinChecked = selectMin.property("checked");
+    const isMaxChecked = selectMax.property("checked");
 
-    if (selectedY.length == 0) {
+    if (!isMinChecked && !isMaxChecked) {
       error.attr("class", "error").property("hidden", false);
-      return;
+    } else {
+      error.property("hidden", true);
+      const selectedY = [selectMin.property("value"), selectMax.property("value")];
+
+      drawGraph(recipes, selectedX, selectedY, selectedType);
     }
-
-    error.property("hidden", true);
-
-    drawGraph(recipes, selectedX, selectedY, selectedType);
   })
 
   toggleTableButton.on("click", () => {
@@ -35,4 +38,27 @@ document.addEventListener("DOMContentLoaded", () => {
     isShowTable = !isShowTable;
   })
 
+  selectMax.on("change", () => {
+    const isMinChecked = selectMin.property("checked");
+    const isMaxChecked = selectMax.property("checked");
+
+    console.log(isMaxChecked, isMinChecked);
+
+    if (!isMinChecked && !isMaxChecked) {
+      error.attr("class", "error").property("hidden", false);
+    } else {
+      error.property("hidden", true);
+    }
+  });
+
+  selectMin.on("change", () => {
+    const isMinChecked = selectMin.property("checked");
+    const isMaxChecked = selectMax.property("checked");
+
+    if (!isMinChecked && !isMaxChecked) {
+      error.attr("class", "error").property("hidden", false);
+    } else {
+      error.property("hidden", true);
+    }
+  });
 })
