@@ -4,6 +4,7 @@ import { HomePage } from "../../pages/home/HomePage";
 import { AppLayout } from "../layout/AppLayout";
 import { Building } from "../../pages/building/BuildingPage";
 import { ChartPage } from "../../pages/chart/ChartPage";
+import { QuizPage } from "../../pages/quiz/QuizPage";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: "/diagrams",
         element: <ChartPage />
+      },
+      {
+        path: "/quiz",
+        element: <QuizPage />
       }
     ]
   }

@@ -10,7 +10,10 @@ import MenuList from "@mui/material/MenuList";
 //import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
+import { useLoading } from "../hooks/useLoading";
 import { NavbarItem } from "./NavbarItem";
+import { SkeletonWrapper } from "./SkeletonWrapper";
+import { Skeleton } from "@mui/material";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -25,11 +28,12 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { loading } = useLoading();
 
   const pagesConfig = [
     { path: "/", label: "Главная" }, 
-    { path: "/list", label: "Список блюд" },
-    { path: "/diagrams", label: "Диаграммы" },
+    { path: "/recipes", label: "Список блюд" },
+    { path: "/diagram", label: "Диаграмма" },
     { path: "/quiz", label: "Проверь себя" }
   ];
 
@@ -44,12 +48,27 @@ export const Navbar = () => {
     >
       <Container maxWidth="xl">
         <StyledToolbar>
-          <Typography variant="h6" sx={{ color: "#5d8aa8" }}>
-            Самые высокие здания и сооружения
-          </Typography>
+          <SkeletonWrapper
+            loading={loading}
+            skeleton={
+              <Skeleton variant="text" animation="wave" width={140} height={60} />
+            }
+          >
+            <Typography variant="h6" sx={{ color: "#5d8aa8"}}>
+              Кккккккукинг
+            </Typography>
+          </SkeletonWrapper>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            {pagesConfig.map((page, index) => (
-              <NavbarItem key={index} path={page.path} label={page.label} isMobile={false}/>
+            {pagesConfig.map((page) => (
+              <SkeletonWrapper
+                key={page.path}
+                loading={loading}
+                skeleton={
+                  <Skeleton variant="rounded" animation="wave" width={100} height={40} sx={{ mr: "5px"}} />
+                }
+              >
+                <NavbarItem path={page.path} label={page.label} isMobile={false} />
+              </SkeletonWrapper>
             ))}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -72,9 +91,19 @@ export const Navbar = () => {
                   </IconButton>
                 </Box>
                 <MenuList>
-                {pagesConfig.map((page, index) => (
-                  <NavbarItem key={index} path={page.path} label={page.label} isMobile={true}/>
-                ))}
+                  {pagesConfig.map((page) => (
+                    <SkeletonWrapper
+                      key={page.path}
+                      loading={loading}
+                      skeleton={
+                        <Skeleton variant="rounded" animation="wave" width={100} height={40} 
+                          sx={{ m: "0 0 5px 5px"}} 
+                        />
+                      }
+                    >
+                    <NavbarItem path={page.path} label={page.label} isMobile={true} />
+                  </SkeletonWrapper>
+                  ))}
                 </MenuList>
               </Box>
             </Drawer>

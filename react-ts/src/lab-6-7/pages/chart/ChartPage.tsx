@@ -17,6 +17,7 @@ export const ChartPage = () => {
     if (newGroup === "Тип") setGroupData(types);
     if (newGroup === "Год") setGroupData(years);
   }
+
   return (
     <>
       <Box sx={{ width:"200px", m:"20px auto" }}>

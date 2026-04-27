@@ -1,6 +1,7 @@
-import { Container } from "@mui/material";
+import { DataGrid, type GridRowsProp } from "@mui/x-data-grid";
 import type { TGroup } from "../../../types/types";
-import { DataGrid, type GridColDef, type GridRowsProp } from "@mui/x-data-grid";
+import type { GridColDef } from "@mui/x-data-grid";
+import { Container } from "@mui/material";
 import { ruRU } from "@mui/x-data-grid/locales";
 
 interface Props {
@@ -8,16 +9,14 @@ interface Props {
 }
 
 export const GroupGrid = ({ data }: Props) => {
-
   const rows: GridRowsProp = data;
 
   const columns: GridColDef[] = [
-    { field: 'Группа', flex: 1},
-    { field: 'Минимальная высота', flex: 0.5},
-    { field: 'Максимальная высота', flex: 0.5},
-    { field: 'Средняя высота', flex: 0.5},
-
-  ];
+    { field: "group", headerName: "Группа", flex: 1 },
+    { field: "minKcal", headerName: "Минимальная кКал", flex: 0.5 },
+    { field: "maxKcal", headerName: "Максимальная кКал", flex: 0.5 },
+    { field: "avgKcal", headerName: "Средняя кКал", flex: 0.5 },
+  ]
 
   return (
     <Container maxWidth="lg" sx={{height: '700px', mt: '20px'}}>

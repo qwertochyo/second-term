@@ -1,7 +1,7 @@
 import { Link as RouterLink } from "react-router-dom";
 import { Breadcrumbs, Link } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import structures from "../mock/data";
+import { cards } from "../mock/cards";
 
 export const BreadCrumbles = () => {
   const location = useLocation();
@@ -10,10 +10,8 @@ export const BreadCrumbles = () => {
   const isHomePage = pathnames.length === 0;
 
   const pathnamesMap = {
-    list: "Список зданий",
-    diagrams: "Диаграммы",
-    buildings: "Здания",
-    quiz: "Проверь себя"
+    recipes: "Список блюд",
+    diagram: "Диаграмма"
   }
 
   return (
@@ -34,13 +32,13 @@ export const BreadCrumbles = () => {
           const path = `/${pathnames.slice(0, index + 1).join("/")}`;
           const isLast = index === pathnames.length - 1;
 
-          if (segment === "building") return null;
+          if (segment === "recipe") return null;
 
           let displayName = pathnamesMap[segment] || segment;
 
-          if (pathnames[index - 1] === "building") {
-            const building = structures[Number(segment)];
-            displayName = building ? building.title : "Здание";
+          if (pathnames[index - 1] === "recipe") {
+            const recipe = cards[Number(segment)];
+            displayName = recipe ? recipe.title : "Рецепт";
           }
 
           return isLast ? (
